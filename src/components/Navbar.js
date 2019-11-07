@@ -1,20 +1,13 @@
 /**
  * @Date:   2019-11-06T23:02:43+00:00
- * @Last modified time: 2019-11-07T14:08:52+00:00
+ * @Last modified time: 2019-11-07T22:26:35+00:00
  */
 import React from 'react';
-import Search from './Search';
-import About from './About';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <Router>
     <nav className="navbar navbar-dark bg-dark">
       <div className="container navbar navbar-dark bg-dark">
         <a href="../index" className="navbar-brand">
@@ -22,13 +15,19 @@ const Navbar = () => {
           Movie DB
         </a>
           <ul className="navbar-nav">
-            <li className="nav-link">
-              <a href="/About" className="nav-link" >About</a>
+            <Link to="/About">
+            <li  className="nav-link">
+              About
             </li>
+            </Link>
+            <Link to="/Home" >
+            <li className="nav-link">
+              Home
+            </li>
+            </Link>
           </ul>
       </div>
     </nav>
-    </Router>
   )
 }
 export default Navbar;

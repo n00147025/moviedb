@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-11-06T22:52:00+00:00
- * @Last modified time: 2019-11-07T13:26:19+00:00
+ * @Last modified time: 2019-11-07T22:25:25+00:00
  */
 
 import React from 'react';
@@ -9,6 +9,9 @@ import Search from './Search';
 import MovieList from './MovieList';
 import Pagination from './Pagination';
 import MovieInfo from './MovieInfo';
+import About from './About';
+import Home from './Home';
+import {  BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 
 class App extends React.Component{
   constructor() {
@@ -60,12 +63,22 @@ class App extends React.Component{
     const numberOfPages = Math.floor(this.state.totalResult / 20);
     return (
       <div className="App">
+
+        <Router>
+        <div>
         <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/home" component={Home} />
+        </Switch>
+        </div>
+        </Router>
+
         { this.state.currentMovie == null ? <div>
           <Search handleSubmit={this.handleSubmit} handleInput= {this.handleInput}/>
           <MovieList movieInfo={this.movieInfo} movies={this.state.movies} />
         </div> : <MovieInfo currentMovie={this.state.currentMovie} movieInfoBack={this.movieInfoBack} />}
-
         { this.state.totalResult > 20 && this.state.currentMovie == null ? <Pagination pages={numberOfPages} nextPage={this.nextPage} currentPage={this.state.currentPage}/> : '' }
       </div>
     );
