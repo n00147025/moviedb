@@ -3,7 +3,8 @@ This project is a React app that consumes the Movie API.
 It gives the user the ability to search for movies in from the movie dv api.
 And display the result to them and giving them the option to view details about the movies.
 
-To start, use a CLI in the project folder and enter 'npm start', this runs the app in as localhost.
+To start, use a CLI in the project folder and enter 'npm start', this runs the app as localhost.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
