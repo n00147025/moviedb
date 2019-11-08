@@ -1,6 +1,6 @@
 /**
  * @Date:   2019-11-06T22:52:00+00:00
- * @Last modified time: 2019-11-07T22:25:25+00:00
+ * @Last modified time: 2019-11-08T03:11:51+00:00
  */
 
 import React from 'react';
@@ -32,11 +32,11 @@ class App extends React.Component{
       .then(data => data.json())
       .then(data => {
         console.log(data);
-        this.setState({ movies: [...data.results], totalResult: data.total_results})   //spreading out the contents
-      })
+        this.setState({ movies: [...data.results], totalResult: data.total_results})   //...data spread operator
+      }).catch(err => console.log(err))                                                //prevents the app from stopping when null is searched for
   }
 
-  handleInput = (evt) => {
+  handleInput = (evt) => {                            //sets the state to the search term, typed into the search  bar
     this.setState({ searchTerm: evt.target.value })
   }
 
@@ -49,13 +49,13 @@ class App extends React.Component{
       })
   }
 
-  movieInfo = (id) => {
-    const selectedMovie = this.state.movies.filter(movie => movie.id == id)
+  movieInfo = (id) => {                                                     //selects the movie we clicked on and displays it
+    const selectedMovie = this.state.movies.filter(movie => movie.id == id) //filters the movies arrays for the id of the selected movie
     const newCurrentMovie = selectedMovie.length > 0 ? selectedMovie[0] : null
-    this.setState({ currentMovie: newCurrentMovie })
+    this.setState({ currentMovie: newCurrentMovie })                        //ensures we find the movie with an id
   }
 
-  movieInfoBack = () => {
+  movieInfoBack = () => {                //sets the current movie to null whenever the back button is pressed
     this.setState({ currentMovie: null})
   }
 
@@ -63,22 +63,20 @@ class App extends React.Component{
     const numberOfPages = Math.floor(this.state.totalResult / 20);
     return (
       <div className="App">
-
         <Router>
-        <div>
-        <Navbar />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/home" component={Home} />
-        </Switch>
-        </div>
+          <div>
+            <Navbar />
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/about" component={About} />
+                <Route path="/home" component={Home} />
+              </Switch>
+          </div>
         </Router>
-
         { this.state.currentMovie == null ? <div>
           <Search handleSubmit={this.handleSubmit} handleInput= {this.handleInput}/>
-          <MovieList movieInfo={this.movieInfo} movies={this.state.movies} />
-        </div> : <MovieInfo currentMovie={this.state.currentMovie} movieInfoBack={this.movieInfoBack} />}
+          <MovieList movieInfo={this.movieInfo} movies={this.state.movies} />  {/* passes movieinfo method as a prop */}</div>
+          : <MovieInfo currentMovie={this.state.currentMovie} movieInfoBack={this.movieInfoBack} />}
         { this.state.totalResult > 20 && this.state.currentMovie == null ? <Pagination pages={numberOfPages} nextPage={this.nextPage} currentPage={this.state.currentPage}/> : '' }
       </div>
     );
